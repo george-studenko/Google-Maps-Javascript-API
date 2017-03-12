@@ -1,4 +1,6 @@
 var map;
+var polygon=null;
+
 
 function initMap(){
   var styles = [
@@ -271,4 +273,24 @@ function initMap(){
     homeInfoWindow.open(map,homeMarker);
   })
 
+  var drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+    drawingControl: true,
+    drawingConrolOptions: {
+      position: google.maps.ControlPosition.TOP_LEFT,
+      drawingModes:[google.maps.drawing.OverlayType.POLYGON]
+    }
+  });
+  $('#draw').click(function(){
+    toggleDrawing(drawingManager);
+  });
+}
+
+
+function toggleDrawing(drawingManager){
+  if(drawingManager.map){
+    drawingManager.setMap(null);
+  }else{
+    drawingManager.setMap(map);
+  }
 }
