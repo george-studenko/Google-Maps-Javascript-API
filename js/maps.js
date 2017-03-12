@@ -263,8 +263,9 @@ function initMap(){
     map: map,
     title: 'Home'
   });
+
   var homeInfoWindow = new google.maps.InfoWindow({
-    content: 'This is Home'
+    content: '<div><img src="https://maps.googleapis.com/maps/api/streetview?size=800x430&location=carrer%20de%20sant%20miquel%20115%20barcelona&fov=120&heading=80&pitch=20"></div>This is Home'
   });
   homeMarker.addListener('click', function(){
     homeInfoWindow.open(map,homeMarker);
