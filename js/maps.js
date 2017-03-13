@@ -48,15 +48,6 @@ function initMap(){
     },
     {
       "featureType": "administrative.land_parcel",
-      "elementType": "labels",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
       "elementType": "labels.text.fill",
       "stylers": [
         {
@@ -91,15 +82,7 @@ function initMap(){
         }
       ]
     },
-    {
-      "featureType": "poi",
-      "elementType": "labels.text",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
+
     {
       "featureType": "poi",
       "elementType": "labels.text.fill",
@@ -186,7 +169,7 @@ function initMap(){
       "elementType": "labels",
       "stylers": [
         {
-          "visibility": "off"
+          "color": "#ffffff"
         }
       ]
     },
@@ -195,7 +178,7 @@ function initMap(){
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#806b63"
+          "color": "#aaaaaa"
         }
       ]
     },
@@ -259,6 +242,7 @@ function initMap(){
     zoom : 16,
     styles: styles
   });
+
   var home = {lat : 41.3766800 , lng: 2.1895860 };
   var homeMarker = new google.maps.Marker({
     position: home,
