@@ -2,20 +2,26 @@
 <html>
   <head>
     <title>Google Maps API - George Studenko</title>
+
     <link href="css/styles.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Barceloneta Map</h1><button id="draw">Draw</button>
-    <div id="map"></div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"></script>
-    <script src="js/maps.js" type="text/javascript">
-        </script>
-      <script
-          src="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry&v=3&callback=initMap&key=AIzaSyAcn2nBEzbvua4fQqs6JFAIb9A82GareqQ">
-          </script>
+    <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="col-xs-2 panel">
+            <h1>Barceloneta Map</h1><button id="draw">Draw</button>
+          </div>
+            <div id="map" class="col-xs-10"></div>
+        </div>
+    </div>
+    <script src="js/maps.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry&v=3&callback=initMap&key=AIzaSyAcn2nBEzbvua4fQqs6JFAIb9A82GareqQ"></script>
+
+
   </body>
 </html>
