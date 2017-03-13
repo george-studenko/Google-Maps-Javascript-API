@@ -1,6 +1,13 @@
 var map;
 var polygon=null;
 
+function MapMarker(address, title, description){
+  this.title=title;
+  this.description=description;
+  this.address=address;
+  this.lat=lat;
+  this.lng=lng;
+}
 
 function initMap(){
   var styles = [
