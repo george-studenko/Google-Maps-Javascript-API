@@ -10,7 +10,12 @@
           <div class="col-xs-3 leftPanel">
             <h1 id="mapTitle">Barceloneta Map</h1><button id="draw">Draw</button>
             <input placeholder="Search" type="search" class="searchBox"/>
+            <div class="markers">
+              <ul data-bind="foreach: markers">
+                <li data-bind="text: title">
+              </ul>
           </div>
+        </div>
             <div id="map" class="col-xs-9"></div>
         </div>
     </div>
