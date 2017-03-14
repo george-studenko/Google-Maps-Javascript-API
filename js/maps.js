@@ -7,6 +7,30 @@ var polygon= null;
   this.address=address;
   }
 
+  MapMarker.prototype.placeMarker = function(){
+    var marker = this;
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({address: marker.address},
+    function (results,status){
+        var lat=0;
+        if (status == google.maps.GeocoderStatus.OK){
+            var position = {lat : results[0].geometry.location.lat() , lng: results[0].geometry.location.lng()};
+            var newMarker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: marker.title
+            });
+            var image=  encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
+            var infoWindow = new google.maps.InfoWindow({
+              content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
+            });
+            newMarker.addListener('click', function(){
+              infoWindow.open(map,newMarker);
+            })
+          }
+        })
+        };
+
 var markersViewModel = {
   markers : ko.observableArray([
         new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home"),
