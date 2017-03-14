@@ -42,6 +42,9 @@ var markersViewModel = {
     search : ko.observable("Home")
 };
 
+  for(var i=0; i<markersViewModel.markers().length ; i++){
+    markersViewModel.markers()[i].placeMarker();
+  }
 
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
