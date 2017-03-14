@@ -40,3 +40,4 @@ function toggleDrawing(drawingManager){
     toggleDrawing(drawingManager);
   });
 
+  ko.applyBindings(markersViewModel);
