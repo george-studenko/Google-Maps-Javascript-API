@@ -7,14 +7,14 @@ var polygon=null;
   this.address=address;
   }
 
-var markersViewModel = function(){
-  this.markers = [
+var markersViewModel = {
+  markers : ko.observableArray([
         new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home"),
-        new MapMarker("Carrer de Sant Miquel 110, Barcelona","Home 1","This is Home"),
-        new MapMarker("Carrer del Mar 15, Barcelona","Home 2","This is Home"),
-        new MapMarker("Carrer Judici 15","Home 3","This is Home"),
-        new MapMarker("Carrer Judici 5","Home 4","This is Home")
-    ];
+        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store"),
+        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar"),
+        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place"),
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery")
+    ]),
 };
 
 
