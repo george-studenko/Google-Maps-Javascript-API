@@ -15,6 +15,7 @@ var markersViewModel = {
         new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place"),
         new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery")
     ]),
+    search : ko.observable("Home")
 };
 
 
