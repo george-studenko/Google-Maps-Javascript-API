@@ -18,19 +18,14 @@ var markersViewModel = function(){
 };
 
 
-  var drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.POLYGON,
-    drawingControl: true,
-    drawingConrolOptions: {
-      position: google.maps.ControlPosition.TOP_LEFT,
-      drawingModes:[google.maps.drawing.OverlayType.POLYGON]
-    }
-  });
-  $('#draw').click(function(){
-    toggleDrawing(drawingManager);
-  });
-}
-
+var drawingManager = new google.maps.drawing.DrawingManager({
+  drawingMode: google.maps.drawing.OverlayType.POLYGON,
+  drawingControl: true,
+  drawingConrolOptions: {
+    position: google.maps.ControlPosition.TOP_LEFT,
+    drawingModes:[google.maps.drawing.OverlayType.POLYGON]
+  }
+});
 
 function toggleDrawing(drawingManager){
   if(drawingManager.map){
@@ -39,3 +34,8 @@ function toggleDrawing(drawingManager){
     drawingManager.setMap(map);
   }
 }
+
+  $('#draw').click(function(){
+    toggleDrawing(drawingManager);
+  });
+
