@@ -1,13 +1,11 @@
 var map;
 var polygon=null;
 
-function MapMarker(address, title, description){
+ var MapMarker = function (address, title, description){
   this.title=title;
   this.description=description;
   this.address=address;
-  this.lat=lat;
-  this.lng=lng;
-}
+  }
 
 var markersViewModel = function(){
   this.markers = [
