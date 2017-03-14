@@ -1,5 +1,5 @@
 var map;
-var polygon=null;
+var polygon= null;
 
  var MapMarker = function (address, title, description){
   this.title=title;
