@@ -55,10 +55,10 @@ var markersViewModel = {
       for(var i=0; i<markersViewModel.markers().length ; i++){
         if(markersViewModel.markers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
           markersViewModel.markers()[i].isVisible(true);
-          allMarkers[i].setMap(map);
+          allMarkers[i].setVisible(true);
         }else{
           markersViewModel.markers()[i].isVisible(false);
-          allMarkers[i].setMap(null);
+          allMarkers[i].setVisible(false);
         }
       }
     },
