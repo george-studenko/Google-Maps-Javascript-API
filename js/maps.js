@@ -44,11 +44,11 @@ var allMarkers = [];
 
 var markersViewModel = {
   markers : ko.observableArray([
-        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,null),
-        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,null),
-        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,null),
-        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,null),
-        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,null)
+        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,map),
+        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map),
+        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map),
+        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map),
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map)
     ]),
 
     filterResults : function(data){
