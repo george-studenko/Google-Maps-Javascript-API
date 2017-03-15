@@ -43,7 +43,19 @@ var markersViewModel = {
         new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,null),
         new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,null)
     ]),
-    search : ko.observable("Home")
+
+    filterResults : function(data){
+      for(var i=0; i<markersViewModel.markers().length ; i++){
+        if(markersViewModel.markers()[i].title.includes(markersViewModel.searchTerm())){
+          markersViewModel.markers()[i].isVisible=true;
+          allMarkers[i].setMap(map);          
+        }else{
+          markersViewModel.markers()[i].isVisible=false;
+          allMarkers[i].setMap(null);
+        }
+      }
+    },
+    searchTerm : ko.observable("")
 };
 
   for(var i=0; i<markersViewModel.markers().length ; i++){

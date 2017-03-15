@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-xs-3 leftPanel">
             <h1 id="mapTitle">Barceloneta Map</h1><button id="draw">Draw</button>
-            <input placeholder="Search" type="search" class="searchBox" id="search" data-bind="value: search" />
+            <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
             <div class="markers">
               <ul data-bind="foreach: markers">
                 <li data-bind="text: title, visible: isVisible">
