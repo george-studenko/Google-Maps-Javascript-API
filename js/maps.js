@@ -53,7 +53,7 @@ var markersViewModel = {
 
     filterResults : function(data){
       for(var i=0; i<markersViewModel.markers().length ; i++){
-        if(markersViewModel.markers()[i].title.includes(markersViewModel.searchTerm())){
+        if(markersViewModel.markers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
           markersViewModel.markers()[i].isVisible(true);
           allMarkers[i].setMap(map);
         }else{
