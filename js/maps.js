@@ -6,14 +6,14 @@ var allMarkers = [];
     this.title=title;
     this.description=description;
     this.address=address;
-    this.isVisible = visible;
+    this.isVisible = ko.observable(visible);
     this.map = map;
     this.markerIndex=-1;
   }
 
   MapMarker.prototype.placeMarker = function(){
     var marker = this;
-    if(marker.isVisible){
+    if(marker.isVisible()){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: marker.address},
         function (results,status){
@@ -54,10 +54,10 @@ var markersViewModel = {
     filterResults : function(data){
       for(var i=0; i<markersViewModel.markers().length ; i++){
         if(markersViewModel.markers()[i].title.includes(markersViewModel.searchTerm())){
-          markersViewModel.markers()[i].isVisible=true;
-          allMarkers[i].setMap(map);          
+          markersViewModel.markers()[i].isVisible(true);
+          allMarkers[i].setMap(map);
         }else{
-          markersViewModel.markers()[i].isVisible=false;
+          markersViewModel.markers()[i].isVisible(false);
           allMarkers[i].setMap(null);
         }
       }
