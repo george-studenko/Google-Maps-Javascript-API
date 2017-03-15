@@ -1,10 +1,14 @@
 var map;
 var polygon= null;
+var allMarkers = [];
 
- var MapMarker = function (address, title, description){
-  this.title=title;
-  this.description=description;
-  this.address=address;
+ var MapMarker = function (address, title, description, visible,map){
+    this.title=title;
+    this.description=description;
+    this.address=address;
+    this.isVisible = visible;
+    this.map = map;
+    this.markerIndex=-1;
   }
 
   MapMarker.prototype.placeMarker = function(){
@@ -33,11 +37,11 @@ var polygon= null;
 
 var markersViewModel = {
   markers : ko.observableArray([
-        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home"),
-        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store"),
-        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar"),
-        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place"),
-        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery")
+        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,null),
+        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,null),
+        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,null),
+        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,null),
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,null)
     ]),
     search : ko.observable("Home")
 };
