@@ -78,7 +78,7 @@ var drawingManager = new google.maps.drawing.DrawingManager({
   }
 });
 
-function toggleDrawing(drawingManager){
+function toggleDrawingManager(drawingManager){
   if(drawingManager.map){
     drawingManager.setMap(null);
   }else{
@@ -87,7 +87,7 @@ function toggleDrawing(drawingManager){
 }
 
   $('#draw').click(function(){
-    toggleDrawing(drawingManager);
+    toggleDrawingManager(drawingManager);
   });
 
   ko.applyBindings(markersViewModel);
