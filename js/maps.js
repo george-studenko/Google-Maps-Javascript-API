@@ -54,7 +54,8 @@ var markersViewModel = {
         new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map),
         new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map),
         new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map),
-        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map)
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map),
+        new MapMarker("Plaza Catalunya, Barcelona","City Center","This is the city center",true,map)
     ]),
 
     filterResults : function(data){
