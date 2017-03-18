@@ -46,8 +46,8 @@ var bounds = new google.maps.LatLngBounds();
 
         MapMarker.prototype.focusMarker =  function(){
           var marker = allMarkers[this.markerIndex];
-          var latLng = marker.getPosition();
-          map.setCenter(latLng);
+          var latLng = marker.getPosition();          
+          map.panTo(latLng);
         };
 
         MapMarker.prototype.fitBounds = function(){
