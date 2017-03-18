@@ -55,6 +55,14 @@ var bounds = new google.maps.LatLngBounds();
           map.fitBounds(bounds);
         };
 
+        MapMarker.prototype.toggleAnimation = function(){
+          var marker = allMarkers[this.markerIndex];
+          if(marker.getAnimation()==null){
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }else{
+          marker.setAnimation(null);
+        }
+        };
 
 var markersViewModel = {
   markers : ko.observableArray([
