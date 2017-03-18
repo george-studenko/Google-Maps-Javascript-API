@@ -24,6 +24,7 @@ var bounds = new google.maps.LatLngBounds();
                 var newMarker = new google.maps.Marker({
                   position: position,
                   map: marker.map,
+                  animation: google.maps.Animation.DROP,
                   title: marker.title
                 });
                 allMarkers.push(newMarker);
