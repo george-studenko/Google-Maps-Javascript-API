@@ -42,6 +42,12 @@ var allMarkers = [];
           }
         };
 
+        MapMarker.prototype.focusMarker =  function(){
+          var marker = allMarkers[this.markerIndex];
+          var latLng = marker.getPosition();
+          map.setCenter(latLng);
+        };
+
 var markersViewModel = {
   markers : ko.observableArray([
         new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,map),

@@ -11,7 +11,7 @@
             <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
             <div class="markers">
               <ul data-bind="foreach: markers">
-                <li data-bind="text: title, visible: isVisible">
+                <li data-bind="text: title, visible: isVisible, click: focusMarker">
               </ul>
           </div>
         </div>
