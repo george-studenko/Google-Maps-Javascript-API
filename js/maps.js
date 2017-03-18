@@ -1,6 +1,7 @@
 var map;
 var polygon= null;
 var allMarkers = [];
+var bounds = new google.maps.LatLngBounds();
 
  var MapMarker = function (address, title, description, visible,map){
     this.title=title;
@@ -27,7 +28,8 @@ var allMarkers = [];
                 });
                 allMarkers.push(newMarker);
                 marker.markerIndex=allMarkers.length-1;
-                console.log(marker.markerIndex);
+                bounds.extend(position);
+                marker.fitBounds();  
                 var image=  encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
                 var infoWindow = new google.maps.InfoWindow({
                   content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
@@ -47,6 +49,11 @@ var allMarkers = [];
           var latLng = marker.getPosition();
           map.setCenter(latLng);
         };
+
+        MapMarker.prototype.fitBounds = function(){
+          map.fitBounds(bounds);
+        };
+
 
 var markersViewModel = {
   markers : ko.observableArray([
