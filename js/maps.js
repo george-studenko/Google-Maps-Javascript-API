@@ -75,6 +75,7 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
             })
           }
 
+          // marker is not visible
           }else{
               allMarkers[marker.markerIndex].map=null;
           }
