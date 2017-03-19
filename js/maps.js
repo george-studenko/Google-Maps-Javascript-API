@@ -22,7 +22,7 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
   MapMarker.prototype.placeMarker = function(){
     var marker = this;
     if(marker.isVisible()){
-      if(marker.lat == null){
+      if(marker.type == 'basic'){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: marker.address},
         function (results,status){
@@ -118,11 +118,10 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
 
 var markersViewModel = {
   markers : ko.observableArray([
-        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,map,null,null,null),
-        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map,null,null,null),
-        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map,null,null,null),
-        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map,null,null,null),
-        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,null)
+        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map,null,null,'basic'),
+        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map,null,null,'basic'),
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,'basic'),
+        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map,null,null,'basic')
     ]),
 
     filterResults : function(data){
@@ -166,12 +165,22 @@ var markersViewModel = {
           }
         });
             clearTimeout(wikiRequestTimeout);
+
             for(var i=0; i<markersViewModel.markers().length ; i++){
+              if(markersViewModel.markers()[i].type=='wiki'){
               markersViewModel.markers()[i].placeMarker();
+            }
             }
       });
     }
 };
+
+for(var i=0; i<markersViewModel.markers().length ; i++){
+  if(markersViewModel.markers()[i].type=='basic'){
+    markersViewModel.markers()[i].placeMarker();
+ }
+
+}
   markersViewModel.placeWikipediaMarkers();
 
 
