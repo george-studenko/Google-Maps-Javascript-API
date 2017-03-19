@@ -29,8 +29,9 @@ var bounds = new google.maps.LatLngBounds();
                 });
                 allMarkers.push(newMarker);
                 marker.markerIndex=allMarkers.length-1;
+                // extend bounds and set the proper zoom and center to show all markers
                 bounds.extend(position);
-                marker.fitBounds();  
+                marker.fitBounds();
                 var image=  encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
                 var infoWindow = new google.maps.InfoWindow({
                   content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
@@ -57,12 +58,17 @@ var bounds = new google.maps.LatLngBounds();
 
         MapMarker.prototype.toggleAnimation = function(){
           var marker = allMarkers[this.markerIndex];
+          // enable animation
           if(marker.getAnimation()==null){
           marker.setAnimation(google.maps.Animation.BOUNCE);
-        }else{
+        }
+        // disable animation
+        else{
           marker.setAnimation(null);
         }
         };
+
+
 
 var markersViewModel = {
   markers : ko.observableArray([
@@ -85,7 +91,8 @@ var markersViewModel = {
         }
       }
     },
-    searchTerm : ko.observable("")
+    // search box
+    searchTerm : ko.observable(""),
 };
 
   for(var i=0; i<markersViewModel.markers().length ; i++){
