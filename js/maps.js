@@ -181,10 +181,9 @@ for(var i=0; i<markersViewModel.markers().length ; i++){
   if(markersViewModel.markers()[i].type=='basic'){
     markersViewModel.markers()[i].placeMarker();
  }
-
 }
-  markersViewModel.placeWikipediaMarkers();
 
+  markersViewModel.placeWikipediaMarkers();
 
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
