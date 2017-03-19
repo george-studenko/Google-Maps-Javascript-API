@@ -138,11 +138,42 @@ var markersViewModel = {
     },
     // search box
     searchTerm : ko.observable(""),
-};
 
-  for(var i=0; i<markersViewModel.markers().length ; i++){
-    markersViewModel.markers()[i].placeMarker();
-  }
+    placeWikipediaMarkers : function(){
+      var wikiRequestTimeout = setTimeout (function(){
+      alert("Error trying to load info from Wikipedia");
+      },9000);
+
+      $.ajax({
+        url: wikiNearbyThumbnails,
+        dataType: 'jsonp'
+      }).done(function(data){
+        var lat = 'lat';
+        var lon = 'lon';
+        var coord = 'coordinates';
+        var thumb = 'thumbnail';
+
+        var items = data.query.pages;
+        Object.keys(items).forEach(function (key) {
+          var wikiMarkers = items[key][coord];
+          var wikiThumbs = items[key][thumb];
+          for(var i=0; i< wikiMarkers.length; i++){
+            var thumbImage = '' ;
+            if(wikiThumbs!=null){
+                thumbImage= "<img src="+wikiThumbs['source']+">";
+            }
+            markersViewModel.markers.push(new MapMarker(null,items[key]['title'],thumbImage,true,map,wikiMarkers[i][lat],wikiMarkers[i][lon],'wiki'));
+          }
+        });
+            clearTimeout(wikiRequestTimeout);
+            for(var i=0; i<markersViewModel.markers().length ; i++){
+              markersViewModel.markers()[i].placeMarker();
+            }
+      });
+    }
+};
+  markersViewModel.placeWikipediaMarkers();
+
 
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
