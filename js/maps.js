@@ -22,6 +22,7 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
   MapMarker.prototype.placeMarker = function(){
     var marker = this;
     if(marker.isVisible()){
+      if(marker.lat == null){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: marker.address},
         function (results,status){
@@ -49,6 +50,31 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
                 })
               }
             })
+          }
+          // lat and lon are not null
+          else{
+            var position = {lat : marker.lat , lng: marker.lon};
+            var newMarker = new google.maps.Marker({
+              position: position,
+              map: marker.map,
+              animation: google.maps.Animation.DROP,
+              title: marker.title,
+              icon: 'images/icons/wiki.png'
+            });
+            allMarkers.push(newMarker);
+            marker.markerIndex=allMarkers.length-1;
+            // extend bounds and set the proper zoom and center to show all markers
+            bounds.extend(position);
+            marker.fitBounds();
+            var infoWindow = new google.maps.InfoWindow({
+              content:  '<h2>'+marker.title+'</h2><div>'+marker.description+'</div>'
+            });
+            allInfoWindows.push(infoWindow);
+            newMarker.addListener('click', function(){
+              marker.openInfoWindow();
+            })
+          }
+
           }else{
               allMarkers[marker.markerIndex].map=null;
           }
