@@ -1,6 +1,8 @@
 var map;
 var polygon= null;
 var allMarkers = [];
+var allInfoWindows = [];
+var currentInfoWindow;
 var bounds = new google.maps.LatLngBounds();
 
  var MapMarker = function (address, title, description, visible,map){
@@ -36,8 +38,9 @@ var bounds = new google.maps.LatLngBounds();
                 var infoWindow = new google.maps.InfoWindow({
                   content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
                 });
+                allInfoWindows.push(infoWindow);
                 newMarker.addListener('click', function(){
-                  infoWindow.open(map,newMarker);
+                  marker.openInfoWindow();
                 })
               }
             })
@@ -48,8 +51,22 @@ var bounds = new google.maps.LatLngBounds();
 
         MapMarker.prototype.focusMarker =  function(){
           var marker = allMarkers[this.markerIndex];
-          var latLng = marker.getPosition();          
+          var latLng = marker.getPosition();
           map.panTo(latLng);
+          this.openInfoWindow();
+        };
+
+        MapMarker.prototype.openInfoWindow = function(){
+          var marker = allMarkers[this.markerIndex];
+          var infoWindow = allInfoWindows[this.markerIndex];
+          map.panTo(marker.getPosition());
+          // close current infowindow open if any
+          if (currentInfoWindow){
+            currentInfoWindow.close();
+          }
+          // set the new current Open infowindow and open it
+          currentInfoWindow = infoWindow;
+          infoWindow.open(map,marker);
         };
 
         MapMarker.prototype.fitBounds = function(){
