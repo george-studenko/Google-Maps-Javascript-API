@@ -100,6 +100,7 @@ var weatherViewModel = {
           var marker = markersModel.mapMarkers()[this.markerIndex].marker;
           var infoWindow = markersModel.mapMarkers()[this.markerIndex].infowindow;
           map.panTo(marker.getPosition());
+
           // close current infowindow open if any
           if (currentInfoWindow){
             currentInfoWindow.close();
@@ -171,6 +172,7 @@ var markersViewModel = {
 
       $.ajax({
         url: wikiNearbyThumbnails,
+        async: false,
         dataType: 'jsonp'
       }).done(function(data){
         var lat = 'lat';
@@ -182,13 +184,27 @@ var markersViewModel = {
         Object.keys(items).forEach(function (key) {
           var wikiMarkers = items[key][coord];
           var wikiThumbs = items[key][thumb];
+
+          function composeDescription(title,description,image,link){
+            return '<a href="'+link+'">'+title+'</a>'+ image + description;
+          }
+
           for(var i=0; i< wikiMarkers.length; i++){
             var thumbImage = '' ;
             if(wikiThumbs!=null){
-                thumbImage= "<img src="+wikiThumbs['source']+">";
+                thumbImage= "<div><img src="+wikiThumbs['source']+"></div>";
             }
-            markersViewModel.markers.push(new MapMarker(null,items[key]['title'],thumbImage,true,map,wikiMarkers[i][lat],wikiMarkers[i][lon],'wiki'));
+            markersModel.mapMarkers.push(new MapMarker(null,items[key]['title'],thumbImage,true,map,wikiMarkers[i][lat],wikiMarkers[i][lon],'wiki'));
           }
+          var urlInfo = encodeURI(wikiNearbyInfo.replace('#SEARCH#',items[key]['title']));
+          $.ajax({
+            async: false,
+            url: urlInfo,
+            dataType: 'jsonp'
+          }).done(function(desc){
+            markersModel.mapMarkers()[markersModel.mapMarkers().length-1].description = desc[2];
+          });
+
         });
             clearTimeout(wikiRequestTimeout);
             markersView.renderMarkers();
@@ -196,8 +212,6 @@ var markersViewModel = {
     }
 };
   markersViewModel.placeWikipediaMarkers();
-
-
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
   drawingControl: true,
