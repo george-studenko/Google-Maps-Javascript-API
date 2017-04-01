@@ -7,6 +7,21 @@ var bounds = new google.maps.LatLngBounds();
 var wikiNearbyThumbnails = 'https://en.wikipedia.org/w/api.php?action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=270&pilimit=50&wbptterms=description&generator=geosearch&ggscoord=41.3766803%7C2.1873975&ggsradius=500&ggslimit=50&format=json';
 var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=revisions&format=json&search=#SEARCH#';
 
+var weatherView = {
+  currentWeatherElement : $('.currentWeather')
+}
+
+var weatherModel = {
+   weatherAPIUrl : 'http://api.openweathermap.org/data/2.5/weather?lat=41.3766803&lon=2.1873975&appid=3d33c1f99df80651f8287e66ca51a9cc&units=metric',
+   currentWeatherData : ko.observable()
+}
+
+var weatherViewModel = {
+    getWeather : function(){
+      //weatherView.currentWeatherElement().appen
+    }
+}
+
  var MapMarker = function (address, title, description, visible, map, lat, lon, type){
     this.title=title;
     this.description=description;
