@@ -37,8 +37,6 @@ var weatherViewModel = {
 
   MapMarker.prototype.placeMarkerFromAddress = function(index){
     var marker = this;
-    if(marker.isVisible()){
-      if(marker.lat == null){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: marker.address},
         function (results,status){
@@ -214,15 +212,7 @@ var markersViewModel = {
       });
     }
 };
-
-for(var i=0; i<markersViewModel.markers().length ; i++){
-  if(markersViewModel.markers()[i].type=='basic'){
-    markersViewModel.markers()[i].placeMarker();
- }
-}
-
-  markersViewModel.placeWikipediaMarkers();
-
+markersViewModel.placeWikipediaMarkers();
 
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
