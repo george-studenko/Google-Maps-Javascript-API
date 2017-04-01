@@ -134,6 +134,10 @@ var markersViewModel = {
         new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,null)
     ]),
 
+    getMapMarkers : function(){
+      return markersModel.mapMarkers;
+    },
+}
 var markersView = {
   renderMarkers : function(){
     for(var i=0; i<markersModel.mapMarkers().length ; i++){
