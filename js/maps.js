@@ -32,6 +32,8 @@ var weatherViewModel = {
     this.lat = lat;
     this.lon = lon;
     this.type = type;
+    this.marker = null;
+    this.infowindow = null;
   }
 
   MapMarker.prototype.placeMarker = function(){
