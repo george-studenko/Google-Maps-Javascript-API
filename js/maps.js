@@ -134,6 +134,17 @@ var markersViewModel = {
         new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,null)
     ]),
 
+var markersView = {
+  renderMarkers : function(){
+    for(var i=0; i<markersModel.mapMarkers().length ; i++){
+      if(markersModel.mapMarkers()[i].type=='wiki'){
+        markersModel.mapMarkers()[i].placeMarkerFromLatLon(i);
+      }else{
+        markersModel.mapMarkers()[i].placeMarkerFromAddress(i);
+      }
+    }
+  }
+}
     filterResults : function(data){
       for(var i=0; i<markersModel.mapMarkers().length ; i++){
         if(markersModel.mapMarkers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
