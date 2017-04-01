@@ -232,30 +232,7 @@ var markersViewModel = {
       });
     }
 };
-markersViewModel.placeWikipediaMarkers();
 
-var drawingManager = new google.maps.drawing.DrawingManager({
-  drawingMode: google.maps.drawing.OverlayType.POLYGON,
-  drawingControl: true,
-  drawingConrolOptions: {
-    position: google.maps.ControlPosition.TOP_LEFT,
-    drawingModes:[google.maps.drawing.OverlayType.POLYGON]
-  }
-});
-
-function toggleDrawingManager(drawingManager){
-  if(drawingManager.map){
-    drawingManager.setMap(null);
-  }else{
-    drawingManager.setMap(map);
-  }
-}
-
-  $('#draw').click(function(){
-    toggleDrawingManager(drawingManager);
-  });
-
-  ko.applyBindings(markersViewModel);
 markersViewModel.placeWikipediaMarkers();
 weatherViewModel.getWeather();
 ko.applyBindings(markersViewModel);
