@@ -12,7 +12,7 @@
             <h1 id="mapTitle">Barceloneta Map</h1><button id="draw">Draw</button>
             <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
             <div class="markers">
-              <ul data-bind="foreach: markers">
+              <ul data-bind="foreach: markersModel.mapMarkers">
                 <li data-bind="text: title, visible: isVisible, click: focusMarker, event: {mouseover: toggleAnimation, mouseout: toggleAnimation}">
               </ul>
           </div>
