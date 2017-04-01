@@ -1,7 +1,5 @@
 var map;
 var polygon= null;
-var allMarkers = [];
-var allInfoWindows = [];
 var currentInfoWindow;
 var bounds = new google.maps.LatLngBounds();
 var wikiNearbyThumbnails = 'https://en.wikipedia.org/w/api.php?action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=270&pilimit=50&wbptterms=description&generator=geosearch&ggscoord=41.3766803%7C2.1873975&ggsradius=500&ggslimit=50&format=json';
@@ -92,15 +90,15 @@ var weatherViewModel = {
         };
 
         MapMarker.prototype.focusMarker =  function(){
-          var marker = allMarkers[this.markerIndex];
+          var marker = markersModel.mapMarkers()[this.markerIndex].marker;
           var latLng = marker.getPosition();
           map.panTo(latLng);
           this.openInfoWindow();
         };
 
         MapMarker.prototype.openInfoWindow = function(){
-          var marker = allMarkers[this.markerIndex];
-          var infoWindow = allInfoWindows[this.markerIndex];
+          var marker = markersModel.mapMarkers()[this.markerIndex].marker;
+          var infoWindow = markersModel.mapMarkers()[this.markerIndex].infowindow;
           map.panTo(marker.getPosition());
           // close current infowindow open if any
           if (currentInfoWindow){
@@ -116,7 +114,7 @@ var weatherViewModel = {
         };
 
         MapMarker.prototype.toggleAnimation = function(){
-          var marker = allMarkers[this.markerIndex];
+          var marker = markersModel.mapMarkers()[this.markerIndex].marker;
           // enable animation
           if(marker.getAnimation()==null){
           marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -137,13 +135,13 @@ var markersViewModel = {
     ]),
 
     filterResults : function(data){
-      for(var i=0; i<markersViewModel.markers().length ; i++){
-        if(markersViewModel.markers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
-          markersViewModel.markers()[i].isVisible(true);
-          allMarkers[i].setVisible(true);
+      for(var i=0; i<markersModel.mapMarkers().length ; i++){
+        if(markersModel.mapMarkers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
+          markersModel.mapMarkers()[i].isVisible(true);
+          markersModel.mapMarkers()[i].marker.setVisible(true);
         }else{
-          markersViewModel.markers()[i].isVisible(false);
-          allMarkers[i].setVisible(false);
+          markersModel.mapMarkers()[i].isVisible(false);
+          markersModel.mapMarkers()[i].marker.setVisible(false);
         }
       }
     },
