@@ -190,9 +190,7 @@ var markersView = {
           }
         });
             clearTimeout(wikiRequestTimeout);
-            for(var i=0; i<markersViewModel.markers().length ; i++){
-              markersViewModel.markers()[i].placeMarker();
-            }
+            markersView.renderMarkers();
       });
     }
 };
