@@ -11,10 +11,9 @@
           <button type="button" class="menu" data-bind="click: toggleMenu">
               <span id="showMenuButton">Hide Menu</span>
           </button>
-
+          <div class="currentWeather" data-bind="html: weatherModel.currentWeatherData"></div>
           <div id="listPanel" class="leftPanel showMenu col-md-2 col-xs-8">
             <h1 id="mapTitle">Barceloneta Map</h1>
-            <div class="currentWeather"></div>
             <button id="draw">Draw</button>
             <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
             <div class="markers">

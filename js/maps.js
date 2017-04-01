@@ -2,7 +2,6 @@ var map;
 var polygon= null;
 var currentInfoWindow;
 var bounds = new google.maps.LatLngBounds();
-var openWeatherCurrentConditions = 'http://api.openweathermap.org/data/2.5/weather?lat=41.3766803&lon=2.1873975&appid=3d33c1f99df80651f8287e66ca51a9cc&units=metric';
 var wikiNearbyThumbnails = 'https://en.wikipedia.org/w/api.php?action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=270&pilimit=50&wbptterms=description&generator=geosearch&ggscoord=41.3766803%7C2.1873975&ggsradius=800&ggslimit=50&format=json';
 var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=revisions&format=json&search=#SEARCH#';
 
@@ -17,7 +16,17 @@ var weatherModel = {
 
 var weatherViewModel = {
     getWeather : function(){
-      //weatherView.currentWeatherElement().appen
+      $.ajax({
+        async: false,
+        url: weatherModel.weatherAPIUrl,
+        dataType: 'jsonp'
+      }).done(function(desc){
+        var temp = desc.main.temp;
+        var humidity = desc.main.humidity;
+        var icon = 'http://openweathermap.org/img/w/' + desc.weather[0].icon + '.png';
+        var currentCondition =  desc.weather[0].description;
+        weatherModel.currentWeatherData('<img src='+icon+'><br/>'+ currentCondition +'<br/>Temp: '+temp+' &deg;C<br/>Humidity'+humidity+'%');
+      });
     }
 }
 
@@ -163,6 +172,7 @@ var markersViewModel = {
         }
       }
     },
+
     // search box
     searchTerm : ko.observable(""),
 
@@ -246,3 +256,6 @@ function toggleDrawingManager(drawingManager){
   });
 
   ko.applyBindings(markersViewModel);
+markersViewModel.placeWikipediaMarkers();
+weatherViewModel.getWeather();
+ko.applyBindings(markersViewModel);
