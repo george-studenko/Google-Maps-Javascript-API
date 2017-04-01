@@ -166,6 +166,16 @@ var markersViewModel = {
     // search box
     searchTerm : ko.observable(""),
 
+    toggleMenu : function(){
+        $('#listPanel').toggleClass('showMenu');
+        $('#listPanel').toggleClass('hideMenu');
+        if($('#showMenuButton').text()=="Show Menu"){
+          $('#showMenuButton').text("Hide Menu");
+        }else{
+          $('#showMenuButton').text("Show Menu");
+        }
+    },
+
     placeWikipediaMarkers : function(){
       var wikiRequestTimeout = setTimeout (function(){
       alert("Error trying to load info from Wikipedia");
