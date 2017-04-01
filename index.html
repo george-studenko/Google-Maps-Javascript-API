@@ -2,20 +2,31 @@
 <html>
   <head>
     <title>Google Maps API - George Studenko</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   </head>
   <body>
     <div class="container-fluid">
         <div class="row">
-          <div class="col-xs-3 leftPanel">
-            <h1 id="mapTitle">Barceloneta Map</h1><button id="draw">Draw</button>
+          <div id="listPanel" class="col-xs-10 col-md-2 leftPanel ">
+            <h1 id="mapTitle">Barceloneta Map</h1>
+            <div class="currentWeather"></div>
+            <button id="draw">Draw</button>
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
             <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
             <div class="markers">
-              <ul data-bind="foreach: markers">
+              <ul data-bind="foreach: markersModel.mapMarkers">
                 <li data-bind="text: title, visible: isVisible, click: focusMarker, event: {mouseover: toggleAnimation, mouseout: toggleAnimation}">
               </ul>
           </div>
         </div>
-            <div id="map" class="col-xs-9"></div>
+            <div id="map" class="col-xs-2 col-md-10"></div>
         </div>
     </div>
 

@@ -1,12 +1,25 @@
 var map;
 var polygon= null;
-var allMarkers = [];
-var allInfoWindows = [];
 var currentInfoWindow;
 var bounds = new google.maps.LatLngBounds();
 var openWeatherCurrentConditions = 'http://api.openweathermap.org/data/2.5/weather?lat=41.3766803&lon=2.1873975&appid=3d33c1f99df80651f8287e66ca51a9cc&units=metric';
 var wikiNearbyThumbnails = 'https://en.wikipedia.org/w/api.php?action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=270&pilimit=50&wbptterms=description&generator=geosearch&ggscoord=41.3766803%7C2.1873975&ggsradius=800&ggslimit=50&format=json';
 var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=revisions&format=json&search=#SEARCH#';
+
+var weatherView = {
+  currentWeatherElement : $('.currentWeather')
+}
+
+var weatherModel = {
+   weatherAPIUrl : 'http://api.openweathermap.org/data/2.5/weather?lat=41.3766803&lon=2.1873975&appid=3d33c1f99df80651f8287e66ca51a9cc&units=metric',
+   currentWeatherData : ko.observable()
+}
+
+var weatherViewModel = {
+    getWeather : function(){
+      //weatherView.currentWeatherElement().appen
+    }
+}
 
  var MapMarker = function (address, title, description, visible, map, lat, lon, type){
     this.title=title;
@@ -18,12 +31,14 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
     this.lat = lat;
     this.lon = lon;
     this.type = type;
+    this.marker = null;
+    this.infowindow = null;
   }
 
-  MapMarker.prototype.placeMarker = function(){
+  MapMarker.prototype.placeMarkerFromAddress = function(index){
     var marker = this;
     if(marker.isVisible()){
-      if(marker.type == 'basic'){
+      if(marker.lat == null){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: marker.address},
         function (results,status){
@@ -36,24 +51,25 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
                   animation: google.maps.Animation.DROP,
                   title: marker.title
                 });
-                allMarkers.push(newMarker);
-                marker.markerIndex=allMarkers.length-1;
                 // extend bounds and set the proper zoom and center to show all markers
                 bounds.extend(position);
                 marker.fitBounds();
-                var image=  encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
+                var image = encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
                 var infoWindow = new google.maps.InfoWindow({
                   content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
                 });
-                allInfoWindows.push(infoWindow);
+                marker.infowindow=infoWindow;
                 newMarker.addListener('click', function(){
                   marker.openInfoWindow();
                 })
+                marker.marker=newMarker;
+                marker.markerIndex=index;
               }
             })
           }
-          // lat and lon are not null
-          else{
+
+          MapMarker.prototype.placeMarkerFromLatLon = function(index){
+            var marker = this;
             var position = {lat : marker.lat , lng: marker.lon};
             var newMarker = new google.maps.Marker({
               position: position,
@@ -62,37 +78,32 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
               title: marker.title,
               icon: 'images/icons/wiki.png'
             });
-            allMarkers.push(newMarker);
-            marker.markerIndex=allMarkers.length-1;
             // extend bounds and set the proper zoom and center to show all markers
             bounds.extend(position);
             marker.fitBounds();
             var infoWindow = new google.maps.InfoWindow({
               content:  '<h2>'+marker.title+'</h2><div>'+marker.description+'</div>'
             });
-            allInfoWindows.push(infoWindow);
+            marker.infowindow=infoWindow;
             newMarker.addListener('click', function(){
               marker.openInfoWindow();
             })
-          }
-
-          // marker is not visible
-          }else{
-              allMarkers[marker.markerIndex].map=null;
-          }
+            marker.marker=newMarker;
+            marker.markerIndex=index;
         };
 
         MapMarker.prototype.focusMarker =  function(){
-          var marker = allMarkers[this.markerIndex];
+          var marker = markersModel.mapMarkers()[this.markerIndex].marker;
           var latLng = marker.getPosition();
           map.panTo(latLng);
           this.openInfoWindow();
         };
 
         MapMarker.prototype.openInfoWindow = function(){
-          var marker = allMarkers[this.markerIndex];
-          var infoWindow = allInfoWindows[this.markerIndex];
+          var marker = markersModel.mapMarkers()[this.markerIndex].marker;
+          var infoWindow = markersModel.mapMarkers()[this.markerIndex].infowindow;
           map.panTo(marker.getPosition());
+
           // close current infowindow open if any
           if (currentInfoWindow){
             currentInfoWindow.close();
@@ -107,7 +118,7 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
         };
 
         MapMarker.prototype.toggleAnimation = function(){
-          var marker = allMarkers[this.markerIndex];
+          var marker = markersModel.mapMarkers()[this.markerIndex].marker;
           // enable animation
           if(marker.getAnimation()==null){
           marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -118,22 +129,39 @@ var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=
         }
         };
 
-var markersViewModel = {
-  markers : ko.observableArray([
-        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map,null,null,'basic'),
-        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map,null,null,'basic'),
-        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,'basic'),
-        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map,null,null,'basic')
+var markersModel = {
+  mapMarkers : ko.observableArray([
+        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,map,null,null,null),
+        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map,null,null,null),
+        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map,null,null,null),
+        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map,null,null,null),
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,null)
     ]),
 
+    getMapMarkers : function(){
+      return markersModel.mapMarkers;
+    },
+}
+var markersView = {
+  renderMarkers : function(){
+    for(var i=0; i<markersModel.mapMarkers().length ; i++){
+      if(markersModel.mapMarkers()[i].type=='wiki'){
+        markersModel.mapMarkers()[i].placeMarkerFromLatLon(i);
+      }else{
+        markersModel.mapMarkers()[i].placeMarkerFromAddress(i);
+      }
+    }
+  }
+}
+var markersViewModel = {
     filterResults : function(data){
-      for(var i=0; i<markersViewModel.markers().length ; i++){
-        if(markersViewModel.markers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
-          markersViewModel.markers()[i].isVisible(true);
-          allMarkers[i].setVisible(true);
+      for(var i=0; i<markersModel.mapMarkers().length ; i++){
+        if(markersModel.mapMarkers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
+          markersModel.mapMarkers()[i].isVisible(true);
+          markersModel.mapMarkers()[i].marker.setVisible(true);
         }else{
-          markersViewModel.markers()[i].isVisible(false);
-          allMarkers[i].setVisible(false);
+          markersModel.mapMarkers()[i].isVisible(false);
+          markersModel.mapMarkers()[i].marker.setVisible(false);
         }
       }
     },
@@ -147,6 +175,7 @@ var markersViewModel = {
 
       $.ajax({
         url: wikiNearbyThumbnails,
+        async: false,
         dataType: 'jsonp'
       }).done(function(data){
         var lat = 'lat';
@@ -158,21 +187,30 @@ var markersViewModel = {
         Object.keys(items).forEach(function (key) {
           var wikiMarkers = items[key][coord];
           var wikiThumbs = items[key][thumb];
+
+          function composeDescription(title,description,image,link){
+            return '<a href="'+link+'">'+title+'</a>'+ image + description;
+          }
+
           for(var i=0; i< wikiMarkers.length; i++){
             var thumbImage = '' ;
             if(wikiThumbs!=null){
-                thumbImage= "<img src="+wikiThumbs['source']+">";
+                thumbImage= "<div><img src="+wikiThumbs['source']+"></div>";
             }
-            markersViewModel.markers.push(new MapMarker(null,items[key]['title'],thumbImage,true,map,wikiMarkers[i][lat],wikiMarkers[i][lon],'wiki'));
+            markersModel.mapMarkers.push(new MapMarker(null,items[key]['title'],thumbImage,true,map,wikiMarkers[i][lat],wikiMarkers[i][lon],'wiki'));
           }
+          var urlInfo = encodeURI(wikiNearbyInfo.replace('#SEARCH#',items[key]['title']));
+          $.ajax({
+            async: false,
+            url: urlInfo,
+            dataType: 'jsonp'
+          }).done(function(desc){
+            markersModel.mapMarkers()[markersModel.mapMarkers().length-1].description = desc[2];
+          });
+
         });
             clearTimeout(wikiRequestTimeout);
-
-            for(var i=0; i<markersViewModel.markers().length ; i++){
-              if(markersViewModel.markers()[i].type=='wiki'){
-              markersViewModel.markers()[i].placeMarker();
-            }
-            }
+            markersView.renderMarkers();
       });
     }
 };
@@ -184,6 +222,7 @@ for(var i=0; i<markersViewModel.markers().length ; i++){
 }
 
   markersViewModel.placeWikipediaMarkers();
+
 
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
