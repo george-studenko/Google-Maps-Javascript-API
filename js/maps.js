@@ -36,10 +36,8 @@ var weatherViewModel = {
     this.infowindow = null;
   }
 
-  MapMarker.prototype.placeMarker = function(){
+  MapMarker.prototype.placeMarkerFromAddress = function(index){
     var marker = this;
-    if(marker.isVisible()){
-      if(marker.lat == null){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: marker.address},
         function (results,status){
@@ -52,24 +50,25 @@ var weatherViewModel = {
                   animation: google.maps.Animation.DROP,
                   title: marker.title
                 });
-                allMarkers.push(newMarker);
-                marker.markerIndex=allMarkers.length-1;
                 // extend bounds and set the proper zoom and center to show all markers
                 bounds.extend(position);
                 marker.fitBounds();
-                var image=  encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
+                var image = encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
                 var infoWindow = new google.maps.InfoWindow({
                   content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
                 });
-                allInfoWindows.push(infoWindow);
+                marker.infowindow=infoWindow;
                 newMarker.addListener('click', function(){
                   marker.openInfoWindow();
                 })
+                marker.marker=newMarker;
+                marker.markerIndex=index;
               }
             })
           }
-          // lat and lon are not null
-          else{
+
+          MapMarker.prototype.placeMarkerFromLatLon = function(index){
+            var marker = this;
             var position = {lat : marker.lat , lng: marker.lon};
             var newMarker = new google.maps.Marker({
               position: position,
@@ -78,23 +77,18 @@ var weatherViewModel = {
               title: marker.title,
               icon: 'images/icons/wiki.png'
             });
-            allMarkers.push(newMarker);
-            marker.markerIndex=allMarkers.length-1;
             // extend bounds and set the proper zoom and center to show all markers
             bounds.extend(position);
             marker.fitBounds();
             var infoWindow = new google.maps.InfoWindow({
               content:  '<h2>'+marker.title+'</h2><div>'+marker.description+'</div>'
             });
-            allInfoWindows.push(infoWindow);
+            marker.infowindow=infoWindow;
             newMarker.addListener('click', function(){
               marker.openInfoWindow();
             })
-          }
-
-          }else{
-              allMarkers[marker.markerIndex].map=null;
-          }
+            marker.marker=newMarker;
+            marker.markerIndex=index;
         };
 
         MapMarker.prototype.focusMarker =  function(){
