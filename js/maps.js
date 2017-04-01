@@ -149,6 +149,7 @@ var markersView = {
     }
   }
 }
+var markersViewModel = {
     filterResults : function(data){
       for(var i=0; i<markersModel.mapMarkers().length ; i++){
         if(markersModel.mapMarkers()[i].title.toLowerCase().includes(markersViewModel.searchTerm().toLowerCase())){
