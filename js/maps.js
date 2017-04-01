@@ -125,8 +125,8 @@ var weatherViewModel = {
         }
         };
 
-var markersViewModel = {
-  markers : ko.observableArray([
+var markersModel = {
+  mapMarkers : ko.observableArray([
         new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,map,null,null,null),
         new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map,null,null,null),
         new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map,null,null,null),
