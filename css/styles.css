@@ -6,6 +6,7 @@ h1{margin-top: 15px; margin-bottom:0px; color:orange; font-size: 25px; text-alig
 #draw{margin-top: 8px; padding: 5px; width:50px; border-radius: 8px;background:#f4b942;border: 0; color:#000;font-weight: bold;font-size: 15px;}
 #draw:hover{background: #028e3f; transition: 0.2s linear; color:#fff  }
 #map { height: 100vh; z-index: 0; }
+#error{visibility: hidden;display: none; z-index: 999; width: 100vw; height: 100vh; background: rgba(255,0,0,0.1); justify-content: center; align-items: center; font-size: 24px; color:red; font-weight: bold;}
 .loading{background: transparent url('../images/loading.gif') no-repeat center center; z-index: 999; width: 100vw; height: 100vh;position: absolute;}
 .searchBox{width: 100%; padding: 10px;margin-top: 10px; border-radius: 7px; font-size: 18px}
 .leftPanel{background: #000000; height: 100vh; overflow: auto; z-index: 1;  position: absolute; transition: 1s ;}

@@ -1,3 +1,23 @@
+var error = false;
+var bounds;
+
+try{
+  bounds = new google.maps.LatLngBounds();
+}
+catch(err){
+// show error message if not able to connect to google
+  error = true;
+  document.getElementById("loading").style.visibility='hidden';
+  document.getElementById("loading").style.display='none';
+  document.getElementById("map").style.display='none';
+  document.getElementById("weather").style.display='none';
+
+  document.getElementById("error").style.visibility='visible';
+  document.getElementById("error").style.display='flex';
+}
+
+if(!error){
+
 var map;
 var currentInfoWindow;
 var bounds = new google.maps.LatLngBounds();
@@ -249,3 +269,4 @@ ko.applyBindings(markersViewModel);
 markersView.renderMarkers();
 markersViewModel.placeWikipediaMarkers();
 weatherViewModel.getWeather();
+}
