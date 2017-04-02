@@ -25,10 +25,12 @@ var weatherViewModel = {
         var humidity = desc.main.humidity;
         var icon = 'http://openweathermap.org/img/w/' + desc.weather[0].icon + '.png';
         var currentCondition =  desc.weather[0].description;
-        weatherModel.currentWeatherData('<img src='+icon+'><br/>'+ currentCondition +'<br/>Temp: '+temp+' &deg;C<br/>Humidity'+humidity+'%');
+        currentCondition = currentCondition.charAt(0).toUpperCase() + currentCondition.slice(1);
+        weatherModel.currentWeatherData('<img src='+icon+'><br/>'+ currentCondition +'<br/>Temp: '+temp+' &deg;C<br/>Humidity: '+humidity+'%');
       });
     }
 }
+
 
  var MapMarker = function (address, title, description, visible, map, lat, lon, type){
     this.title=title;
