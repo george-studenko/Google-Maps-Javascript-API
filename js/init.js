@@ -238,4 +238,10 @@ function initMap(){
     zoom : 16,
     styles: styles
   });
+
+  google.maps.event.addListener(map,"idle", function(){
+          document.getElementById("loading").style.visibility='hidden';
+             document.getElementById("loading").style.display='none';
+             markersViewModel.showMenuFirstTime();
+              });
 }
