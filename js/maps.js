@@ -209,6 +209,86 @@ var markersViewModel = {
       }
     },
 
+    loadGooglePlaces : function(){
+      var request = {
+        location: new google.maps.LatLng(41.3766803,2.1873975),
+        radius: '900',
+        types: ['store', 'hospital','park','school','library','bank','police','gym']
+      };
+
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request,   function (results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        markersViewModel.createPlacesMarkers(results);
+    }
+      });
+},
+
+  createPlacesMarkers: function(places) {
+  var bounds = new google.maps.LatLngBounds();
+  var placesList = document.getElementById('places');
+  var service = new google.maps.places.PlacesService(map);
+
+  for (var i = 0, place; place = places[i]; i++) {
+    var image = {
+      url: place.icon,
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(25, 25)
+    };
+
+    var photos = place.photos;
+    var bigPhoto='';
+    if (photos) {
+        image = photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35});
+        bigPhoto = photos[0].getUrl({'maxWidth': 300, 'maxHeight': 300});
+    }
+
+    var marker = new google.maps.Marker({
+      map: map,
+      icon: image,
+      title: place.name,
+      position: place.geometry.location
+    });
+
+    var infowindow = new google.maps.InfoWindow({maxWidth: 300});
+    var type = capitalize(place.types[0]).replace(/_/g,' ');
+    var innerHtml ='';
+
+    if(bigPhoto!=''){
+      innerHtml = innerHtml + '<div><img src="'+bigPhoto+'"></div>';
+    }
+
+    if(place.types){
+      innerHtml = innerHtml +'<b>'+type +'</b>: '+place.name;
+    }
+
+    if(place.rating){
+      innerHtml = innerHtml +' ('+place.rating+'&starf;)';
+    }
+
+    if(place.vicinity){
+      innerHtml = innerHtml + '<br><b>Address</b>: '+place.vicinity;
+    }
+
+    infowindow.setContent(innerHtml);
+
+    var index = markersModel.mapMarkers.push(new MapMarker(null,type+': '+place.name,image,true,map,place.geometry.lat,place.geometry.lng,'places')) - 1;
+    markersModel.mapMarkers()[index].marker = marker;
+    markersModel.mapMarkers()[index].markerIndex = index;
+    markersModel.mapMarkers()[index].infowindow = infowindow;
+
+    marker.addListener('click', (function(indexCopy){
+        return function(){
+            markersModel.mapMarkers()[indexCopy].openInfoWindow();
+        };
+    })(index));
+    bounds.extend(place.geometry.location);
+  }
+  map.fitBounds(bounds);
+},
+
 // search box
 searchTerm : ko.observable(""),
 
