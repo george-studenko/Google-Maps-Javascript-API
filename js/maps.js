@@ -153,11 +153,16 @@ var markersModel = {
 var markersView = {
   renderMarkers : function(){
     for(var i=0; i<markersModel.mapMarkers().length ; i++){
+      if(markersModel.mapMarkers()[i].type==null){
+        markersModel.mapMarkers()[i].placeMarkerFromAddress(i);
+      }
+    }
+  },
 
+  renderWikiMarkers : function(){
+    for(var i=0; i<markersModel.mapMarkers().length ; i++){
       if(markersModel.mapMarkers()[i].type=='wiki'){
         markersModel.mapMarkers()[i].placeMarkerFromLatLon(i);
-      }else{
-        markersModel.mapMarkers()[i].placeMarkerFromAddress(i);
       }
     }
   }
@@ -231,12 +236,13 @@ var markersViewModel = {
 
         });
             clearTimeout(wikiRequestTimeout);
-            markersView.renderMarkers();
+            markersView.renderWikiMarkers();
       });
     }
 };
 
 
+ko.applyBindings(markersViewModel);
+markersView.renderMarkers();
 markersViewModel.placeWikipediaMarkers();
 weatherViewModel.getWeather();
-ko.applyBindings(markersViewModel);
