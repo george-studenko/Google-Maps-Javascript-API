@@ -193,6 +193,9 @@ var markersViewModel = {
         }
     },
 
+    showMenuFirstTime : function(){
+      $('#listPanel').css('transform','');
+    },
 
     placeWikipediaMarkers : function(){
       var wikiRequestTimeout = setTimeout (function(){
