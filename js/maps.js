@@ -209,8 +209,8 @@ var markersViewModel = {
       }
     },
 
-    // search box
-    searchTerm : ko.observable(""),
+// search box
+searchTerm : ko.observable(""),
 
     toggleMenu : function(){
         $('#listPanel').toggleClass('showMenu');
