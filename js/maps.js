@@ -113,7 +113,7 @@ var weatherViewModel = {
             // extend bounds and set the proper zoom and center to show all markers
             bounds.extend(position);
             marker.fitBounds();
-            var infoWindow = new google.maps.InfoWindow({
+            var infoWindow = new google.maps.InfoWindow({maxWidth: 300,
               content:  '<h2>'+marker.title+'</h2><div>'+marker.description+'</div>'
             });
             marker.infowindow=infoWindow;
