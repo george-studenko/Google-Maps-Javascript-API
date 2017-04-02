@@ -1,5 +1,7 @@
-# Google Maps Javascript API
-Customizing Google Maps through the Javascript API by changing default colors, and combining with Panoramio and StreetView APIs to build a custom neighbourhood map.
+# Neighborhood Map
+Single page web app.
+
+Made with Google Maps Javascript API, customized colors, StreetView, Wikipedia API, OpenWeatherMap and Google Places.
 
 ## Instructions to run it
 Clone the project and open `index.html` in any browser
