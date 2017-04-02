@@ -182,6 +182,11 @@ var markersView = {
     }
   },
 
+  showMenuFirstTime : function(){
+    $('#listPanel').css('transform','');
+    $('.menu').css('transform','');
+  },
+
   renderWikiMarkers : function(){
     for(var i=0; i<markersModel.mapMarkers().length ; i++){
       if(markersModel.mapMarkers()[i].type=='wiki'){
@@ -214,10 +219,6 @@ var markersViewModel = {
         }else{
           $('#showMenuButton').text("Show Menu");
         }
-    },
-
-    showMenuFirstTime : function(){
-      $('#listPanel').css('transform','');
     },
 
     placeWikipediaMarkers : function(){
