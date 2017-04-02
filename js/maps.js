@@ -54,7 +54,7 @@ var weatherViewModel = {
 }
 
 
- var MapMarker = function (address, title, description, visible, map, lat, lon, type){
+ var MapMarker = function (address, title, description, visible, map, lat, lon, type, heading, marker = null){
     this.title=title;
     this.description=description;
     this.address=address;
@@ -64,8 +64,9 @@ var weatherViewModel = {
     this.lat = lat;
     this.lon = lon;
     this.type = type;
-    this.marker = null;
+    this.marker = marker;
     this.infowindow = null;
+    this.heading = heading;
   }
 
   MapMarker.prototype.placeMarkerFromAddress = function(index){
@@ -85,8 +86,8 @@ var weatherViewModel = {
                 // extend bounds and set the proper zoom and center to show all markers
                 bounds.extend(position);
                 marker.fitBounds();
-                var image = encodeURI('https://maps.googleapis.com/maps/api/streetview?size=320x240&location='+marker.address+'&fov=280&pitch=10');
-                var infoWindow = new google.maps.InfoWindow({
+                var image = encodeURI('https://maps.googleapis.com/maps/api/streetview?size=300x300&location='+marker.address+'&heading='+marker.heading+'&pitch=10');
+                var infoWindow = new google.maps.InfoWindow({maxWidth: 300,
                   content:  '<h2>'+marker.title+'</h2><div><img src='+image+'></div>' + marker.description
                 });
                 marker.infowindow=infoWindow;
@@ -162,11 +163,11 @@ var weatherViewModel = {
 
 var markersModel = {
   mapMarkers : ko.observableArray([
-        new MapMarker("Carrer de Sant Miquel 115, Barcelona","Home","This is Home",true,map,null,null,null),
-        new MapMarker("Almiral Cervera, Barcelona","Pharmacy","Drug Store",true,map,null,null,null),
-        new MapMarker("Plaza de Mar, Barcelona","Buenas Migas","Bar",true,map,null,null,null),
-        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Hamburguers Place",true,map,null,null,null),
-        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,null)
+        new MapMarker("Carrer de Andrea Doria 6-2, Barcelona","Market","This is the Barceloneta Market",true,map,null,null,null,300),
+        new MapMarker("Carrer Sant Miquel Platja, 10","Sant Miquel Beach","This is one of the many beaches in the neighborhood",true,map,null,null,null,100),
+        new MapMarker("Hospital del Mar, 08003 Barcelona","Hospital del Mar","Hospital",true,map,null,null,null,280),
+        new MapMarker("Paseo de Juan de Borbón, 2","Burguer King","Fast Food Place 24 hours",true,map,null,null,null,350),
+        new MapMarker("Judici 8, Barcelona","Forn de Pa Motserrat","Bakery",true,map,null,null,null,100)
     ]),
 
     getMapMarkers : function(){
