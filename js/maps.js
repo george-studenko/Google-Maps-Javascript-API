@@ -268,9 +268,13 @@ var markersViewModel = {
     }
 };
 
+function initMap(){
+  markersView.renderMarkers();
+  markersViewModel.placeWikipediaMarkers();
+  weatherViewModel.getWeather();
+  markersViewModel.loadGooglePlaces();
+}
 
 ko.applyBindings(markersViewModel);
-markersView.renderMarkers();
-markersViewModel.placeWikipediaMarkers();
-weatherViewModel.getWeather();
+initMap();
 }
