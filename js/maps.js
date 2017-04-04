@@ -374,13 +374,13 @@ searchTerm : ko.observable(""),
     }
 };
 
-function initMap(){
-  markersView.renderMarkers();
-  markersViewModel.placeWikipediaMarkers();
-  weatherViewModel.getWeather();
-  markersViewModel.loadGooglePlaces();
+function initializate() {
+    mapViewModel.initMapModel();
+    markersView.renderMarkers();
+    markersViewModel.placeWikipediaMarkers();
+    weatherViewModel.getWeather();
+    markersViewModel.loadGooglePlaces();
+    markersView.showMenuFirstTime();
 }
 
 ko.applyBindings(markersViewModel);
-initMap();
-}
