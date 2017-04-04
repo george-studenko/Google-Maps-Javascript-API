@@ -1,25 +1,50 @@
-var error = false;
-var bounds;
+var mapModel = {
+    bounds: null,
+    map: null,
+    currentInfoWindow: null,
+    defaultIcon: 'http://maps.google.com/mapfiles/marker.png',
+    wikiIcon: 'images/icons/wiki.png',
+    showHideButtonText: ko.observable('Hide Menu'),
+};
 
-try{
-  bounds = new google.maps.LatLngBounds();
-}
-catch(err){
-// show error message if not able to connect to google
-  error = true;
-  document.getElementById("loading").style.visibility='hidden';
-  document.getElementById("loading").style.display='none';
-  document.getElementById("map").style.display='none';
-  document.getElementById("weather").style.display='none';
+var mapView = {
+    showToast: function(message) {
+        var x = document.getElementById("snackbar")
+        x.innerHTML = message;
+        x.className = "show";
+        setTimeout(function() {
+            x.className = x.className.replace("show", "");
+        }, 3000);
+    }
+};
 
-  document.getElementById("error").style.visibility='visible';
-  document.getElementById("error").style.display='flex';
-}
+var mapViewModel = {
+    initMapModel: function() {
+        mapModel.bounds = new google.maps.LatLngBounds();
+    },
+    // handle error
+    googleError: function() {
+        error = true;
+        document.getElementById("loading").style.visibility = 'hidden';
+        document.getElementById("loading").style.display = 'none';
+        document.getElementById("map").style.display = 'none';
+        document.getElementById("weather").style.display = 'none';
+        document.getElementById("error").style.visibility = 'visible';
+        document.getElementById("error").style.display = 'flex';
+    },
 
-if(!error){
+    toggleMenu: function() {
+        $('#listPanel').toggleClass('showMenu');
+        $('#listPanel').toggleClass('hideMenu');
 
-var map;
-var currentInfoWindow;
+        if (mapModel.showHideButtonText() == "Show Menu") {
+            mapModel.showHideButtonText("Hide Menu");
+        } else {
+            mapModel.showHideButtonText("Show Menu");
+        }
+    },
+};
+
 var wikiNearbyThumbnails = 'https://en.wikipedia.org/w/api.php?action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=270&pilimit=50&wbptterms=description&generator=geosearch&ggscoord=41.3766803%7C2.1873975&ggsradius=800&ggslimit=50&format=json';
 var wikiNearbyInfo = 'https://en.wikipedia.org/w/api.php?action=opensearch&prop=revisions&format=json&search=#SEARCH#';
 

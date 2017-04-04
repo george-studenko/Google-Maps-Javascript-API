@@ -233,19 +233,17 @@ function initMap(){
       ]
     }
   ] ;
-  map = new google.maps.Map(document.getElementById('map'),{
+
+  mapModel.map = new google.maps.Map(document.getElementById('map'),{
     center : {lat : 41.3766800 , lng: 2.1895860 },
     zoom : 16,
     styles: styles
   });
 
-  google.maps.event.addListener(map,"idle", function(){
+  google.maps.event.addListener(mapModel.map,"idle", function(){
           document.getElementById("loading").style.visibility='hidden';
              document.getElementById("loading").style.display='none';
-             markersView.showMenuFirstTime();
               });
-
-
   google.maps.event.addDomListener(window, 'resize', function() {
                 mapModel.map.fitBounds(mapModel.bounds);
               });
