@@ -246,4 +246,7 @@ function initMap(){
               });
 
 
+  google.maps.event.addDomListener(window, 'resize', function() {
+                mapModel.map.fitBounds(mapModel.bounds);
+              });
 }
