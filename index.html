@@ -1,43 +1,43 @@
 <!Doctype html>
 <html>
-  <head>
+<head>
     <title>Google Maps API - George Studenko</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Raleway">
-  </head>
-  <body>
-    <div class="container-fluid">
-        <div class="row">
-          <button type="button" class="menu" data-bind="click: toggleMenu" style="transform: translateX(-4000px);">
-              <span id="showMenuButton">Hide Menu</span>
+</head>
+<body>
+    <main class="container-fluid">
+        <section class="row">
+            <button type="button" class="menu" data-bind="click: mapViewModel.toggleMenu" style="transform: translateX(-4000px);">
+              <span id="showMenuButton" data-bind="text: mapModel.showHideButtonText"></span>
           </button>
-          <div id="weather" class="currentWeather" data-bind="html: weatherModel.currentWeatherData"></div>
-          <div id="listPanel" class="leftPanel showMenu col-xs-7 col-sm-4  col-md-3  col-lg-3" style="transform: translateX(-600px);">
-           <div class="panelHeader">
-               <h1 id="mapTitle">Barceloneta Map</h1>
-              <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
-          </div>
-            <div class="markers">
-              <ul data-bind="foreach: markersModel.mapMarkers">
-                <li data-bind="text: title, visible: isVisible, click: focusMarker, event: {mouseover: toggleAnimation, mouseout: toggleAnimation}">
-              </ul>
-          </div>
-        </div>
-            <div id="map" class="col-md-12"></div>
-            <div class="loading" id="loading"></div>
-            <div id="error" style="display:none">An error occurred please check your internet connection and try again</div>
-        </div>
-    </div>
+            <section id="weather" class="currentWeather" data-bind="html: weatherModel.currentWeatherData"></section>
+            <aside id="listPanel" class="leftPanel showMenu col-xs-7 col-sm-4  col-md-3  col-lg-3" style="transform: translateX(-600px);">
+                <section class="panelHeader">
+                    <h1 id="mapTitle">Barceloneta Map</h1>
+                    <input placeholder="Search" type="search" class="searchBox" id="searchInput" data-bind="textInput: searchTerm, event: {keyup: filterResults}" />
+                </section>
+                <section class="markers">
+                    <ul data-bind="foreach: markersModel.mapMarkers">
+                        <li data-bind="text: title, visible: isVisible, click: focusMarker, event: {mouseover: toggleAnimation, mouseout: toggleAnimation}">
+                    </ul>
+                </section>
+            </aside>
+            <section id="map" class="col-md-12"></section>
+            <section class="loading" id="loading"></section>
+            <section id="error" style="display:none">An error occurred please check your internet connection and try again</section>
             <div id="snackbar"></div>
+        </section>
+    </main>
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="crossorigin="anonymous" ></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-<script src="js/init.js" type="text/javascript"></script>
-<script src="js/maps.js" type="text/javascript" ></script>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&v=3&callback=initMap&key=AIzaSyAcn2nBEzbvua4fQqs6JFAIb9A82GareqQ" async onerror="googleError()"></script>
-  </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="js/init.js" type="text/javascript"></script>
+    <script src="js/maps.js" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&v=3&callback=initMap&key=AIzaSyAcn2nBEzbvua4fQqs6JFAIb9A82GareqQ" async onerror="googleError()"></script>
+</body>
 </html>
